@@ -35,6 +35,7 @@ Last updated: 2026-05-27 22:25:00 UTC
 - Install dependencies: `npm install`
 - Run locally: `npm run dev`
 - Validate production build: `npm run build`
+- Run production preview: `npm run start`
 
 ## Module Inputs And Outputs
 
@@ -59,3 +60,4 @@ Last updated: 2026-05-27 22:25:00 UTC
 
 - 2026-05-27 21:15:11 UTC: Bootstrap project documentation.
 - 2026-05-27 22:25:00 UTC: Implement Anne Liu personal portfolio landing page.
+- 2026-05-27 21:54:00 UTC: Add explicit Vite production start command for OpenDeploy.
