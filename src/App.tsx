@@ -158,7 +158,7 @@ const proofLinks: LinkItem[] = [
 ];
 
 const aboutGalleryItems = [
-  { label: 'Visual & Design', image: visualDesignImage, className: 'col-span-2 h-72 md:h-80' },
+  { label: 'Visual & Design', image: comicsCharacterSheetImage, className: 'col-span-2 h-72 md:h-80' },
   { label: 'ForgeRedemption', image: forgeRedemptionImage, className: 'h-36 md:h-44' },
   { label: 'Civil-AI-zation', image: civilAiZationImage, className: 'h-36 md:h-44' },
 ];
@@ -411,14 +411,20 @@ function App() {
         <div className="relative h-full overflow-hidden rounded-2xl bg-[#101010] md:rounded-[2rem]">
           <video
             autoPlay
-            className="absolute inset-0 h-full w-full object-cover opacity-50"
+            className="absolute inset-0 h-full w-full object-cover"
             loop
             muted
             playsInline
             src={heroVideo}
           />
-          <div className="noise-overlay pointer-events-none absolute inset-0 opacity-[0.7] mix-blend-overlay" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/5 via-45% to-black/90" />
+          <div className="noise-overlay pointer-events-none absolute inset-0 opacity-[0.22] mix-blend-overlay" />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 52%, rgba(0,0,0,0.58) 76%, rgba(0,0,0,0.94) 100%)',
+            }}
+          />
 
           <div className="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-7 md:p-9">
             <div className="grid items-end gap-6 lg:grid-cols-12">
