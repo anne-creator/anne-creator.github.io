@@ -1,0 +1,11 @@
+{
+  "name": "anne-liu-portfolio",
+  "type": "web",
+  "language": "typescript",
+  "framework": "vite",
+  "port": 4173,
+  "start_command": "sh -c \"vite preview --host 0.0.0.0 --port ${PORT:-4173}\"",
+  "build_command": "tsc -b && vite build",
+  "runtime_variables": {},
+  "build_variables": {}
+}
