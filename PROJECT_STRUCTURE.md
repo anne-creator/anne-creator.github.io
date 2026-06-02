@@ -1,6 +1,6 @@
 # Project Structure
 
-Last updated: 2026-05-31 21:32:21 UTC
+Last updated: 2026-06-02 00:00:00 UTC
 
 ## Project Structure
 
@@ -12,6 +12,7 @@ Last updated: 2026-05-31 21:32:21 UTC
 - `.opendeploy/project.json` stores the saved OpenDeploy project/service context.
 - `.opendeploy/service.json` stores the OpenDeploy service body used for the current Vite web service.
 - `CODING_SESSION_2026-05-31.md` records the OpenDeploy install, deploy, claim link, live URL, and verification details for the May 30-31 deployment session.
+- `opendeploy_resource.md` is an internal OpenDeploy strategy, positioning, GTM, competitive, investor, QA, and source-map resource.
 
 ### File Tree
 
@@ -21,6 +22,7 @@ Last updated: 2026-05-31 21:32:21 UTC
 ├── package.json
 ├── postcss.config.js
 ├── CODING_SESSION_2026-05-31.md
+├── opendeploy_resource.md
 ├── .opendeploy
 │   ├── project.json
 │   └── service.json
@@ -73,6 +75,7 @@ Last updated: 2026-05-31 21:32:21 UTC
 - Vite preview allows the deployed OpenDeploy host so the production URL can serve the app.
 - Vite preview allows OpenDeploy subdomains so newly created OpenDeploy auto domains can serve the app.
 - Hero section plays the bundled local MP4 instead of a remote CloudFront video URL.
+- OpenDeploy resource document organizes supplied founder notes into a durable Markdown brief with dated traction, public source links, positioning, product narrative, GTM, competition, fundraising frame, and verification notes.
 
 ## Maintenance Log
 
@@ -84,3 +87,4 @@ Last updated: 2026-05-31 21:32:21 UTC
 - 2026-05-29 23:26:00 UTC: Add clickable project popups and Comics work card.
 - 2026-05-29 23:41:26 UTC: Redesign Work cards around full images, add Comics image, reorder EAZO before GroundTruth, and strengthen prize copy.
 - 2026-05-31 21:32:21 UTC: Record OpenDeploy install/deploy session, save fresh OpenDeploy project/service context, and allow OpenDeploy wildcard preview hosts.
+- 2026-06-02 00:00:00 UTC: Add OpenDeploy Markdown resource for strategy, positioning, GTM, investor narrative, QA, and source tracking.
