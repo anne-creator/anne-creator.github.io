@@ -1,6 +1,6 @@
 # Project Structure
 
-Last updated: 2026-06-02 00:00:00 UTC
+Last updated: 2026-06-08 00:00:00 UTC
 
 ## Project Structure
 
@@ -9,6 +9,7 @@ Last updated: 2026-06-02 00:00:00 UTC
 - `src/index.css` defines Tailwind layers, global font/background styles, and SVG noise utilities.
 - `src/assets/` stores portfolio proof images, the Comics character sheet, and the local hero MP4.
 - Tailwind, Vite, PostCSS, and TypeScript configs live at the project root.
+- `.github/workflows/deploy-pages.yml` builds the Vite app and deploys `dist/` to GitHub Pages for the personal website repository.
 - `.opendeploy/project.json` stores the saved OpenDeploy project/service context.
 - `.opendeploy/service.json` stores the OpenDeploy service body used for the current Vite web service.
 - `CODING_SESSION_2026-05-31.md` records the OpenDeploy install, deploy, claim link, live URL, and verification details for the May 30-31 deployment session.
@@ -26,6 +27,9 @@ Last updated: 2026-06-02 00:00:00 UTC
 ├── .opendeploy
 │   ├── project.json
 │   └── service.json
+├── .github
+│   └── workflows
+│       └── deploy-pages.yml
 ├── src
 │   ├── App.tsx
 │   ├── assets
@@ -44,6 +48,7 @@ Last updated: 2026-06-02 00:00:00 UTC
 - Install dependencies: `npm install`
 - Run locally: `npm run dev`
 - Validate production build: `npm run build`
+- Publish GitHub Pages: push to `main`; GitHub Actions builds and deploys `dist/`.
 - Run production preview: `npm run start`
 - Deploy to saved OpenDeploy service: upload source, then create/wait for deployment using the saved context.
 
@@ -76,6 +81,7 @@ Last updated: 2026-06-02 00:00:00 UTC
 - Vite preview allows OpenDeploy subdomains so newly created OpenDeploy auto domains can serve the app.
 - Hero section plays the bundled local MP4 instead of a remote CloudFront video URL.
 - OpenDeploy resource document organizes supplied founder notes into a durable Markdown brief with dated traction, public source links, positioning, product narrative, GTM, competition, fundraising frame, and verification notes.
+- GitHub Pages workflow publishes the Vite build artifact from `main` to the personal website at `anne-creator.github.io`.
 
 ## Maintenance Log
 
@@ -88,3 +94,4 @@ Last updated: 2026-06-02 00:00:00 UTC
 - 2026-05-29 23:41:26 UTC: Redesign Work cards around full images, add Comics image, reorder EAZO before GroundTruth, and strengthen prize copy.
 - 2026-05-31 21:32:21 UTC: Record OpenDeploy install/deploy session, save fresh OpenDeploy project/service context, and allow OpenDeploy wildcard preview hosts.
 - 2026-06-02 00:00:00 UTC: Add OpenDeploy Markdown resource for strategy, positioning, GTM, investor narrative, QA, and source tracking.
+- 2026-06-08 00:00:00 UTC: Create GitHub Pages workflow for the `anne-creator.github.io` personal website repository.
