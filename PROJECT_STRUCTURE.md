@@ -1,13 +1,13 @@
 # Project Structure
 
-Last updated: 2026-06-08 01:00:00 UTC
+Last updated: 2026-06-08 04:26:39 UTC
 
 ## Project Structure
 
 - `index.html` loads the Google fonts and mounts the React app.
 - `src/App.tsx` contains the single-page portfolio, data arrays, animation components, proof links, clickable work cards, and project popup modal.
 - `src/index.css` defines Tailwind layers, global font/background styles, and SVG noise utilities.
-- `src/assets/` stores portfolio proof images, the Comics character sheet, and the local hero MP4.
+- `src/assets/` stores portfolio proof images, the Posterlytics SVG card visual, the Comics character sheet, and the local hero MP4.
 - Tailwind, Vite, PostCSS, and TypeScript configs live at the project root.
 - `.github/workflows/deploy-pages.yml` builds the Vite app and deploys `dist/` to GitHub Pages for the personal website repository.
 - `.opendeploy/project.json` stores the saved OpenDeploy project/service context.
@@ -66,16 +66,19 @@ Last updated: 2026-06-08 01:00:00 UTC
 - Added Comics project links for two LinkedIn comic releases.
 - Added a Comics character sheet image for the Comics Work card.
 - Updated the public RedNote audience proof stat to 2,300 followers.
+- Added Posterlytics project links for the live InsForge site and LinkedIn launch post.
+- Added a local Posterlytics SVG card visual representing poster generation, QR attribution, and placement analytics.
 
 ## Feature Specs
 
 - Single-page personal portfolio for Anne Liu with Hero, About/Proof, and Work sections.
 - Visual system follows a dark cinematic cream palette with Almarai and Instrument Serif fonts.
-- Work cards summarize ForgeRedemption, GroundTruth/nHackathon, EAZO GTM Tool, Civil-AI-zation, Creative Archive, and Comics.
+- Work cards summarize ForgeRedemption, Posterlytics, EAZO GTM Tool, GroundTruth/nHackathon, Civil-AI-zation, Creative Archive, and Comics.
 - Each Work card opens a popup with simple project details and external proof links.
 - Work cards use full uncropped images with title, eyebrow, number, link count, and Open project CTA only.
-- Work order highlights ForgeRedemption first, EAZO GTM Tool second, and GroundTruth/nHackathon third.
+- Work order highlights ForgeRedemption first, Posterlytics second, EAZO GTM Tool third, and GroundTruth/nHackathon fourth.
 - ForgeRedemption and EAZO GTM Tool copy calls out their cash-prize wins.
+- Posterlytics copy calls out the InsForge Hackathon win, URL-to-poster generation, per-placement QR attribution, and scan/conversion analytics.
 - Framer Motion powers pull-up text, card entrance animation, and scroll-linked About text reveal.
 - Lucide icons support CTAs, links, and checklist affordances.
 - Vite preview allows the deployed OpenDeploy host so the production URL can serve the app.
@@ -84,6 +87,7 @@ Last updated: 2026-06-08 01:00:00 UTC
 - OpenDeploy resource document organizes supplied founder notes into a durable Markdown brief with dated traction, public source links, positioning, product narrative, GTM, competition, fundraising frame, and verification notes.
 - GitHub Pages workflow publishes the Vite build artifact from `main` to the personal website at `anne-creator.github.io`.
 - About proof cards show the current RedNote audience milestone of 2,300 followers.
+- Hero profile copy positions Anne as an OpenDeploy Co-Founder and 3x hackathon winner.
 
 ## Maintenance Log
 
@@ -98,3 +102,4 @@ Last updated: 2026-06-08 01:00:00 UTC
 - 2026-06-02 00:00:00 UTC: Add OpenDeploy Markdown resource for strategy, positioning, GTM, investor narrative, QA, and source tracking.
 - 2026-06-08 00:00:00 UTC: Create GitHub Pages workflow for the `anne-creator.github.io` personal website repository.
 - 2026-06-08 01:00:00 UTC: Update RedNote follower proof stat to 2,300.
+- 2026-06-08 04:26:39 UTC: Add Posterlytics as the second project card and update hero proof copy to 3x hackathon winner.

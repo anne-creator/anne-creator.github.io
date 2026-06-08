@@ -14,6 +14,7 @@ import eazoGtmImage from './assets/eazo-gtm.png';
 import forgeRedemptionImage from './assets/forge-redemption.jpg';
 import heroVideo from './assets/girl-personal-portfolio.mp4';
 import groundTruthImage from './assets/groundtruth.png';
+import posterlyticsImage from './assets/posterlytics.svg';
 import visualDesignImage from './assets/visual-design.png';
 
 const textColor = '#E1E0CC';
@@ -60,6 +61,28 @@ const workItems: WorkItem[] = [
   },
   {
     number: '02',
+    title: 'Posterlytics',
+    eyebrow: 'InsForge Hackathon winner',
+    description:
+      'Turns any product URL into an on-brand promotional poster with per-placement QR codes that track scans, conversions, and channel performance automatically.',
+    bullets: ['URL-to-poster agent', 'Per-placement QR attribution', 'Scan + conversion dashboard'],
+    detailIntro:
+      'Posterlytics closes the gap between building and distribution: paste a product URL, get an on-brand poster, and see which placement actually drives traction.',
+    detailBullets: [
+      'Agentically extracts product assets, color palette, typography, imagery, and brand tone from a supplied URL.',
+      'Generates poster copy and a hosted landing page that are ready for the target audience.',
+      'Creates unique QR codes for placements like Instagram, LinkedIn, and physical posters.',
+      'Tracks scans, visitors, conversions, and per-placement channel performance.',
+      'Built with React, TypeScript, Postgres row-level security, and GPT-4o via InsForge for text and image generation.',
+    ],
+    links: [
+      { label: 'Website', href: 'https://3f9q2998.insforge.site/' },
+      { label: 'LinkedIn post', href: 'https://www.linkedin.com/feed/update/urn:li:activity:7469518204747399168/' },
+    ],
+    image: posterlyticsImage,
+  },
+  {
+    number: '03',
     title: 'EAZO GTM Tool',
     eyebrow: 'EAZO HackSong Asia 1st / $5,000 cash',
     description:
@@ -77,7 +100,7 @@ const workItems: WorkItem[] = [
     image: eazoGtmImage,
   },
   {
-    number: '03',
+    number: '04',
     title: 'GroundTruth / nHackathon',
     eyebrow: 'Founder decision engine',
     description:
@@ -97,7 +120,7 @@ const workItems: WorkItem[] = [
     image: groundTruthImage,
   },
   {
-    number: '04',
+    number: '05',
     title: 'Civil-AI-zation',
     eyebrow: 'AI arena system',
     description:
@@ -114,7 +137,7 @@ const workItems: WorkItem[] = [
     image: civilAiZationImage,
   },
   {
-    number: '05',
+    number: '06',
     title: 'Illustration & Visual',
     eyebrow: 'Creative archive',
     description: 'My illustration and design works',
@@ -130,7 +153,7 @@ const workItems: WorkItem[] = [
     image: visualDesignImage,
   },
   {
-    number: '06',
+    number: '07',
     title: 'Comics',
     eyebrow: 'Visual storytelling',
     description: 'Two short comics exploring product, identity, and builder culture.',
@@ -431,7 +454,7 @@ function App() {
               <div className="lg:col-span-8">
                 <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-black/30 px-3 py-2 text-[10px] uppercase tracking-[0.18em] text-primary/70 backdrop-blur">
                   <Sparkles className="h-3.5 w-3.5" />
-                  Forever Builder / GTM Co-Founder / Influencer
+                  Forever Builder / OpenDeploy Co-Founder / Influencer
                 </p>
                 <h1
                   className="text-[18vw] font-medium leading-[0.85] text-[#E1E0CC] sm:text-[17vw] md:text-[16vw] lg:text-[14vw] xl:text-[13vw] 2xl:text-[12vw]"
@@ -446,8 +469,8 @@ function App() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  Forever Builder, OpenDeploy Co-Founder, and AI ecosystem influencer, 2x hackathon Winner (1st at
-                  tokens & MiraclePlus).
+                  Forever Builder, OpenDeploy Co-Founder, and AI ecosystem influencer, 3x hackathon winner (tokens,
+                  MiraclePlus, and InsForge).
                 </motion.p>
                 <motion.div
                   className="mt-6 flex flex-wrap gap-3"
@@ -507,7 +530,7 @@ function App() {
             </div>
             <div className="mx-auto mt-6 flex max-w-3xl flex-wrap justify-center gap-2">
               {[
-                'GTM Co-Founder @ OpenDeploy',
+                'OpenDeploy Co-Founder',
                 'Hackathon',
                 'Honour Specialization In CS',
                 'Psychology',
