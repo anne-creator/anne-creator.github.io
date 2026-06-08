@@ -1,6 +1,6 @@
 # Project Structure
 
-Last updated: 2026-06-08 00:00:00 UTC
+Last updated: 2026-06-08 01:00:00 UTC
 
 ## Project Structure
 
@@ -65,6 +65,7 @@ Last updated: 2026-06-08 00:00:00 UTC
 - Added static project/social links for LinkedIn, GitHub, Xiaohongshu, Dribbble, Notion, Devpost, and live demos.
 - Added Comics project links for two LinkedIn comic releases.
 - Added a Comics character sheet image for the Comics Work card.
+- Updated the public RedNote audience proof stat to 2,300 followers.
 
 ## Feature Specs
 
@@ -82,6 +83,7 @@ Last updated: 2026-06-08 00:00:00 UTC
 - Hero section plays the bundled local MP4 instead of a remote CloudFront video URL.
 - OpenDeploy resource document organizes supplied founder notes into a durable Markdown brief with dated traction, public source links, positioning, product narrative, GTM, competition, fundraising frame, and verification notes.
 - GitHub Pages workflow publishes the Vite build artifact from `main` to the personal website at `anne-creator.github.io`.
+- About proof cards show the current RedNote audience milestone of 2,300 followers.
 
 ## Maintenance Log
 
@@ -95,3 +97,4 @@ Last updated: 2026-06-08 00:00:00 UTC
 - 2026-05-31 21:32:21 UTC: Record OpenDeploy install/deploy session, save fresh OpenDeploy project/service context, and allow OpenDeploy wildcard preview hosts.
 - 2026-06-02 00:00:00 UTC: Add OpenDeploy Markdown resource for strategy, positioning, GTM, investor narrative, QA, and source tracking.
 - 2026-06-08 00:00:00 UTC: Create GitHub Pages workflow for the `anne-creator.github.io` personal website repository.
+- 2026-06-08 01:00:00 UTC: Update RedNote follower proof stat to 2,300.

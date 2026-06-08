@@ -495,7 +495,7 @@ function App() {
             <ScrollRevealText text={aboutText} />
             <div className="mx-auto mt-8 grid w-full max-w-2xl grid-cols-3 gap-2 text-left" id="proof">
               {[
-                ['2000+', 'RedNote followers'],
+                ['2,300', 'RedNote followers'],
                 ['2.7w', 'likes / saves'],
                 ['72', 'GitHub repositories'],
               ].map(([value, label]) => (
