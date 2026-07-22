@@ -92,17 +92,32 @@ export const capabilities = [
   {
     title: 'I build',
     description: 'I get close enough to the product to find and demonstrate the value that deserves attention.',
-    bullets: ['AI prototypes and product demos', 'GTM and attribution tools', 'Agent workflows', 'Technical product narratives'],
+    bullets: [
+      { label: 'AI prototypes and product demos', source: proofLinks[1] },
+      { label: 'GTM and attribution tools', source: proofLinks[0] },
+      { label: 'Agent workflows', source: proofLinks[1] },
+      { label: 'Technical product narratives', source: proofLinks[0] },
+    ],
   },
   {
     title: 'I grow',
     description: 'I create recurring reasons for founders, developers, and early users to gather and stay involved.',
-    bullets: ['Technical workshops', 'Founder and developer communities', 'Events and partnerships', 'Bilingual follow-up systems'],
+    bullets: [
+      { label: 'Technical workshops', source: proofLinks[0] },
+      { label: 'Founder and developer communities', source: proofLinks[0] },
+      { label: 'Events and partnerships', source: proofLinks[0] },
+      { label: 'Bilingual follow-up systems', source: proofLinks[2] },
+    ],
   },
   {
     title: 'I prove',
     description: 'I turn launches and community activity into visible evidence, feedback, and the next decision.',
-    bullets: ['3× hackathon winner', 'Shipped technical products', 'Public audience and content', 'Real-world community programs'],
+    bullets: [
+      { label: '3× hackathon winner', source: proofLinks[0] },
+      { label: 'Shipped technical products', source: proofLinks[1] },
+      { label: 'Public audience and content', source: proofLinks[2] },
+      { label: 'Real-world community programs', source: proofLinks[0] },
+    ],
   },
 ];
 
@@ -159,7 +174,7 @@ export const gtmStories: GtmStory[] = [
         summary: 'Public event-distribution profile supporting the workshop and community-program record.',
       },
       {
-        label: 'EAZO event proof',
+        label: 'EAZO event update',
         href: 'https://www.linkedin.com/feed/update/urn:li:activity:7464459906998317056/',
         kind: 'Hackathon and event record',
         summary: 'A public post connecting event participation, community distribution, and a GTM-tool win.',
@@ -236,7 +251,7 @@ export const gtmStories: GtmStory[] = [
         previewImage: posterlyticsImage,
       },
       {
-        label: 'EAZO GTM proof',
+        label: 'EAZO GTM update',
         href: 'https://www.linkedin.com/feed/update/urn:li:activity:7464459906998317056/',
         kind: 'Public launch and award',
         summary: 'Public evidence for the channel-attribution workflow and regional hackathon win.',
@@ -263,11 +278,11 @@ export const workItems: WorkItem[] = [
       'Won 1st place in EAZO HackSong Asia region with a $5,000 cash prize.',
       'Tracks channel-level performance for clearer growth decisions.',
       'Packages targeting and outreach judgment into repeatable workflows.',
-      'Uses public proof to show the outcome and momentum behind the work.',
+      'Uses public records to show the outcome and momentum behind the work.',
     ],
     links: [
       {
-        label: 'LinkedIn proof',
+        label: 'LinkedIn update',
         href: 'https://www.linkedin.com/feed/update/urn:li:activity:7464459906998317056/',
         kind: 'Award and launch post',
         summary: 'Public record of the product, team, event, and Asia regional 1st-place result.',
@@ -304,7 +319,7 @@ export const workItems: WorkItem[] = [
       {
         label: 'LinkedIn post',
         href: 'https://www.linkedin.com/feed/update/urn:li:activity:7469518204747399168/',
-        kind: 'Launch proof',
+        kind: 'Launch record',
         summary: 'Public product walkthrough and launch context.',
         previewImage: posterlyticsImage,
       },

@@ -292,7 +292,7 @@ function WeChatQrPopover() {
   );
 }
 
-function ProofPreview({ source }: { source: ProofSource }) {
+function ProofPreview({ source, triggerLabel }: { source: ProofSource; triggerLabel?: string }) {
   const [open, setOpen] = useState(false);
   const generatedId = useId();
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -343,12 +343,13 @@ function ProofPreview({ source }: { source: ProofSource }) {
       <button
         aria-controls={previewId}
         aria-expanded={open}
-        className="group inline-flex w-full items-center justify-between gap-2 rounded-full border border-primary/15 px-3 py-2 text-left text-xs text-primary/80 transition hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 sm:w-auto"
+        className={`group inline-flex text-left text-primary/85 underline decoration-primary/25 decoration-1 underline-offset-4 transition hover:text-primary hover:decoration-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 ${
+          triggerLabel ? 'w-fit text-sm leading-relaxed' : 'text-sm'
+        }`}
         onClick={() => setOpen((value) => !value)}
         type="button"
       >
-        <span>{source.label}</span>
-        <span className="text-[9px] uppercase tracking-[0.14em] text-primary/40">proof</span>
+        <span>{triggerLabel ?? source.label}</span>
       </button>
       <AnimatePresence>
         {open ? (
@@ -397,7 +398,7 @@ function ProofList({ sources }: { sources: ProofSource[] }) {
 
 function StatusPill({ status }: { status: ClaimStatus }) {
   const labels: Record<ClaimStatus, string> = {
-    verified: 'Proof so far',
+    verified: 'Completed',
     active: 'Active work',
     planned: 'Experimenting next',
   };
@@ -453,7 +454,7 @@ function WorkCard({ item, index, onOpen }: { item: WorkItem; index: number; onOp
         </ul>
         <div className="mt-auto flex items-center justify-between gap-4 pt-6">
           <span className="text-[10px] uppercase tracking-[0.16em] text-primary/45">
-            {item.links.length} proof source{item.links.length === 1 ? '' : 's'}
+            {item.links.length} source{item.links.length === 1 ? '' : 's'}
           </span>
           <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 px-3 py-2 text-xs text-primary/80 transition group-hover:border-primary/40 group-hover:text-primary">
             Open project
@@ -528,7 +529,7 @@ function ProjectModal({ item, onClose }: { item: WorkItem; onClose: () => void }
           ))}
         </ul>
         <div className="mt-7 border-t border-primary/10 pt-5">
-          <p className="mb-3 text-[9px] uppercase tracking-[0.18em] text-primary/45">Supporting proof</p>
+          <p className="mb-3 text-[9px] uppercase tracking-[0.18em] text-primary/45">Sources</p>
           <ProofList sources={item.links} />
         </div>
       </motion.div>
@@ -594,13 +595,13 @@ function GtmStoryCard({ story, index }: { story: GtmStory; index: number }) {
           </div>
           <div className="mt-7 grid gap-8 xl:grid-cols-2">
             <StoryList items={story.approach} title="How the system works" />
-            <StoryList items={story.proof} title="Proof so far" />
+            <StoryList items={story.proof} title="What I’ve done" />
           </div>
           <div className="mt-8 rounded-[8px] bg-black/35 p-4">
             <StoryList items={story.nextTests} title="What I’m testing next" />
           </div>
           <div className="mt-7">
-            <p className="mb-3 text-[9px] uppercase tracking-[0.18em] text-primary/45">Supporting proof</p>
+            <p className="mb-3 text-[9px] uppercase tracking-[0.18em] text-primary/45">Sources</p>
             <ProofList sources={story.sources} />
           </div>
         </div>
@@ -774,9 +775,9 @@ function App() {
                 <p className="mt-3 text-base leading-relaxed text-gray-300">{capability.description}</p>
                 <ul className="mt-6 space-y-3 border-t border-primary/10 pt-5">
                   {capability.bullets.map((bullet) => (
-                    <li className="flex gap-3 text-sm leading-relaxed text-primary/85" key={bullet}>
+                    <li className="flex gap-3 text-sm leading-relaxed text-primary/85" key={bullet.label}>
                       <Check className="h-3.5 w-3.5 flex-none" />
-                      {bullet}
+                      <ProofPreview source={bullet.source} triggerLabel={bullet.label} />
                     </li>
                   ))}
                 </ul>
