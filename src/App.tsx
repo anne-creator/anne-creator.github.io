@@ -20,10 +20,12 @@ import heroDesktopPoster from './assets/hero-desktop-poster.webp';
 import heroMobilePoster from './assets/hero-mobile-poster.webp';
 import heroMobileVideo from './assets/hero-mobile.mp4';
 import heroDesktopVideo from './assets/girl-personal-portfolio.mp4';
+import wechatQr from './assets/wechat-qr.jpg';
 import {
   aboutGalleryItems,
   capabilities,
   collaborationPaths,
+  contactEmailHref,
   growthStages,
   gtmStories,
   linkedinUrl,
@@ -192,6 +194,101 @@ function HeroMedia() {
       preload="auto"
       src={videoSource}
     />
+  );
+}
+
+function WeChatIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" className={className} fill="none" viewBox="0 0 24 24">
+      <path
+        d="M9.6 5.25C5.4 5.25 2 7.9 2 11.2c0 1.96 1.2 3.71 3.05 4.8l-.52 2.02 2.29-1.18c.87.24 1.79.36 2.78.36 4.2 0 7.6-2.65 7.6-6s-3.4-5.95-7.6-5.95Z"
+        fill="currentColor"
+        fillOpacity=".95"
+      />
+      <path
+        d="M14.3 10.2c-3.25 0-5.9 2.12-5.9 4.75 0 2.62 2.65 4.75 5.9 4.75.72 0 1.4-.1 2.03-.28l1.65.86-.38-1.46c1.1-.87 1.8-2.12 1.8-3.57 0-2.63-2.15-4.75-5.1-4.75Z"
+        fill="currentColor"
+        fillOpacity=".7"
+      />
+      <circle cx="7.3" cy="10.8" fill="#101010" r=".7" />
+      <circle cx="11.4" cy="10.8" fill="#101010" r=".7" />
+      <circle cx="12.8" cy="14.75" fill="#101010" r=".62" />
+      <circle cx="16" cy="14.75" fill="#101010" r=".62" />
+    </svg>
+  );
+}
+
+function WeChatQrPopover() {
+  const [open, setOpen] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+  };
+
+  const scheduleClose = () => {
+    cancelClose();
+    closeTimer.current = setTimeout(() => setOpen(false), 120);
+  };
+
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    const onPointerDown = (event: PointerEvent) => {
+      if (!wrapperRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('pointerdown', onPointerDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener('pointerdown', onPointerDown);
+      cancelClose();
+    };
+  }, [open]);
+
+  return (
+    <div
+      className="relative"
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) scheduleClose();
+      }}
+      onFocus={cancelClose}
+      onMouseEnter={() => {
+        cancelClose();
+        setOpen(true);
+      }}
+      onMouseLeave={scheduleClose}
+      ref={wrapperRef}
+    >
+      <button
+        aria-controls="wechat-qr"
+        aria-expanded={open}
+        aria-label="Show Anne Liu's WeChat QR code"
+        className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/15 bg-black/30 text-primary/80 backdrop-blur transition hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+        onClick={() => setOpen((value) => !value)}
+        type="button"
+      >
+        <WeChatIcon className="h-5 w-5" />
+      </button>
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            animate={{ opacity: 1, y: 0 }}
+            className="absolute bottom-full right-0 z-40 mb-3 w-56 rounded-[8px] border border-primary/15 bg-[#171717] p-3 text-center shadow-glow"
+            exit={{ opacity: 0, y: 6 }}
+            id="wechat-qr"
+            initial={{ opacity: 0, y: 6 }}
+            transition={{ duration: 0.16 }}
+          >
+            <img className="w-full rounded-[6px]" src={wechatQr} alt="WeChat QR code for Anne Liu" />
+            <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-primary/60">Scan to connect on WeChat</p>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </div>
   );
 }
 
@@ -530,6 +627,23 @@ function App() {
                 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.58) 72%, rgba(0,0,0,0.96) 100%)',
             }}
           />
+          <nav aria-label="Portfolio sections" className="absolute inset-x-0 top-0 z-20 hidden items-center justify-between p-7 lg:flex md:p-9">
+            <a className="text-[10px] uppercase tracking-[0.2em] text-primary/75 transition hover:text-primary" href="#about">
+              Anne Liu / Technical GTM
+            </a>
+            <div className="flex items-center gap-5 text-[10px] uppercase tracking-[0.16em] text-primary/60">
+              {[
+                ['Approach', '#engine'],
+                ['Stories', '#gtm-stories'],
+                ['Work', '#work'],
+                ['Contact', '#contact'],
+              ].map(([label, href]) => (
+                <a className="transition hover:text-primary" href={href} key={href}>
+                  {label}
+                </a>
+              ))}
+            </div>
+          </nav>
           <div className="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-7 md:p-9">
             <div className="grid items-end gap-6 lg:grid-cols-12">
               <div className="lg:col-span-8">
@@ -544,7 +658,7 @@ function App() {
               <div className="lg:col-span-4">
                 <motion.p
                   animate={{ opacity: 1, y: 0 }}
-                  className="max-w-md text-sm leading-snug text-primary/85 md:text-base"
+                  className="max-w-md text-base leading-snug text-primary/90 sm:text-lg md:text-xl"
                   initial={{ opacity: 0, y: 20 }}
                   transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 >
@@ -552,7 +666,7 @@ function App() {
                 </motion.p>
                 <motion.p
                   animate={{ opacity: 1, y: 0 }}
-                  className="mt-3 max-w-md text-xs leading-relaxed text-primary/55"
+                  className="mt-4 max-w-md text-sm leading-relaxed text-primary/70 md:text-base"
                   initial={{ opacity: 0, y: 20 }}
                   transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 >
@@ -560,7 +674,7 @@ function App() {
                 </motion.p>
                 <motion.p
                   animate={{ opacity: 1 }}
-                  className="mt-3 text-[9px] uppercase tracking-[0.14em] text-primary/45"
+                  className="mt-4 text-[10px] uppercase tracking-[0.14em] text-primary/60 sm:text-[11px]"
                   initial={{ opacity: 0 }}
                   transition={{ duration: 0.8, delay: 0.7 }}
                 >
@@ -574,9 +688,7 @@ function App() {
                 >
                   <a
                     className="group inline-flex items-center gap-2 rounded-full bg-primary py-2 pl-5 pr-2 text-sm font-medium text-black transition hover:gap-3 sm:text-base"
-                    href={linkedinUrl}
-                    rel="noreferrer"
-                    target="_blank"
+                    href={contactEmailHref}
                   >
                     Start a conversation
                     <span className="flex h-9 w-9 items-center justify-center rounded-full bg-black transition group-hover:scale-110 sm:h-10 sm:w-10">
@@ -592,6 +704,7 @@ function App() {
                   >
                     <Linkedin className="h-5 w-5" />
                   </a>
+                  <WeChatQrPopover />
                 </motion.div>
               </div>
             </div>
@@ -762,9 +875,7 @@ function App() {
             </h2>
             <a
               className="group mt-8 inline-flex items-center gap-2 rounded-full bg-primary py-2 pl-5 pr-2 text-sm font-medium text-black transition hover:gap-3 sm:text-base"
-              href={linkedinUrl}
-              rel="noreferrer"
-              target="_blank"
+              href={contactEmailHref}
             >
               Start a conversation
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-black transition group-hover:scale-110 sm:h-10 sm:w-10">

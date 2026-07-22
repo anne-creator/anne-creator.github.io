@@ -48,6 +48,8 @@ export type GtmStory = {
 };
 
 export const linkedinUrl = 'https://www.linkedin.com/in/anneliu49/';
+export const contactEmail = 'anneliu49@gmail.com';
+export const contactEmailHref = `mailto:${contactEmail}`;
 
 export const proofLinks: ProofSource[] = [
   {
