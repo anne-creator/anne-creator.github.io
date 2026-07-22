@@ -149,11 +149,11 @@ function ScrollRevealText({ text }: { text: string }) {
   const chars = Array.from(text);
 
   if (reduceMotion) {
-    return <p className="mx-auto mt-8 max-w-3xl text-sm leading-relaxed text-[#DEDBC8] md:text-base">{text}</p>;
+    return <p className="mx-auto mt-8 max-w-3xl text-base leading-relaxed text-[#DEDBC8] md:text-lg">{text}</p>;
   }
 
   return (
-    <p ref={ref} className="mx-auto mt-8 max-w-3xl text-sm leading-relaxed text-[#DEDBC8] md:text-base">
+    <p ref={ref} className="mx-auto mt-8 max-w-3xl text-base leading-relaxed text-[#DEDBC8] md:text-lg">
       <span className="sr-only">{text}</span>
       {chars.map((char, index) => (
         <AnimatedLetter
@@ -367,8 +367,8 @@ function ProofPreview({ source }: { source: ProofSource }) {
               </div>
             ) : null}
             <p className="text-[9px] uppercase tracking-[0.16em] text-primary/45">{source.kind}</p>
-            <p className="mt-2 text-xs leading-relaxed text-gray-300">{source.summary}</p>
-            {source.dateOrResult ? <p className="mt-2 text-[11px] text-primary/65">{source.dateOrResult}</p> : null}
+            <p className="mt-2 text-sm leading-relaxed text-gray-200">{source.summary}</p>
+            {source.dateOrResult ? <p className="mt-2 text-xs text-primary/75">{source.dateOrResult}</p> : null}
             <a
               className="mt-3 inline-flex items-center gap-2 text-xs text-primary transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
               href={source.href}
@@ -442,10 +442,10 @@ function WorkCard({ item, index, onOpen }: { item: WorkItem; index: number; onOp
           </div>
           <span className="text-sm text-primary/40">{item.number}</span>
         </div>
-        <p className="mt-5 text-sm leading-relaxed text-gray-400">{item.description}</p>
+        <p className="mt-5 text-base leading-relaxed text-gray-300">{item.description}</p>
         <ul className="mt-4 space-y-2">
           {item.bullets.slice(0, 2).map((bullet) => (
-            <li className="flex gap-2 text-xs leading-snug text-primary/55" key={bullet}>
+            <li className="flex gap-2 text-sm leading-snug text-primary/75" key={bullet}>
               <span className="mt-1.5 h-1 w-1 flex-none rounded-full bg-primary/50" />
               {bullet}
             </li>
@@ -542,7 +542,7 @@ function StoryList({ title, items }: { title: string; items: string[] }) {
       <p className="text-[9px] uppercase tracking-[0.18em] text-primary/45">{title}</p>
       <ul className="mt-3 space-y-3">
         {items.map((item) => (
-          <li className="flex gap-3 text-sm leading-relaxed text-gray-400" key={item}>
+          <li className="flex gap-3 text-base leading-relaxed text-gray-300" key={item}>
             <Check className="mt-1 h-3.5 w-3.5 flex-none text-primary/70" />
             <span>{item}</span>
           </li>
@@ -575,7 +575,7 @@ function GtmStoryCard({ story, index }: { story: GtmStory; index: number }) {
             <img className="h-64 w-full object-contain sm:h-80" src={story.image} alt={story.imageAlt} />
           </div>
           <p className="mt-5 text-[9px] uppercase tracking-[0.18em] text-primary/45">Why it matters</p>
-          <p className="mt-3 text-sm leading-relaxed text-primary/75">{story.startupValue}</p>
+          <p className="mt-3 text-base leading-relaxed text-primary/90">{story.startupValue}</p>
         </div>
         <div>
           <h3 className="text-3xl leading-[0.98] text-[#E1E0CC] sm:text-4xl">{story.title}</h3>
@@ -585,11 +585,11 @@ function GtmStoryCard({ story, index }: { story: GtmStory; index: number }) {
           <div className="mt-7 grid gap-6 border-y border-primary/10 py-6 sm:grid-cols-2">
             <div>
               <p className="text-[9px] uppercase tracking-[0.18em] text-primary/45">Context</p>
-              <p className="mt-3 text-sm leading-relaxed text-gray-400">{story.context}</p>
+              <p className="mt-3 text-base leading-relaxed text-gray-300">{story.context}</p>
             </div>
             <div>
               <p className="text-[9px] uppercase tracking-[0.18em] text-primary/45">My role</p>
-              <p className="mt-3 text-sm leading-relaxed text-gray-400">{story.role}</p>
+              <p className="mt-3 text-base leading-relaxed text-gray-300">{story.role}</p>
             </div>
           </div>
           <div className="mt-7 grid gap-8 xl:grid-cols-2">
@@ -666,7 +666,7 @@ function App() {
                 </motion.p>
                 <motion.p
                   animate={{ opacity: 1, y: 0 }}
-                  className="mt-4 max-w-md text-sm leading-relaxed text-primary/70 md:text-base"
+                  className="mt-4 max-w-md text-base leading-relaxed text-primary/85 md:text-lg"
                   initial={{ opacity: 0, y: 20 }}
                   transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 >
@@ -730,7 +730,7 @@ function App() {
                 {proofStats.map(([value, label]) => (
                   <div className="rounded-[8px] bg-black/45 p-3 sm:p-4" key={label}>
                     <p className="text-xl leading-none text-primary sm:text-3xl">{value}</p>
-                    <p className="mt-2 text-[10px] text-gray-500 sm:text-[11px]">{label}</p>
+                    <p className="mt-2 text-xs text-gray-400 sm:text-sm">{label}</p>
                   </div>
                 ))}
               </div>
@@ -771,10 +771,10 @@ function App() {
               >
                 <p className="text-[9px] uppercase tracking-[0.18em] text-primary/40">0{index + 1}</p>
                 <h3 className="mt-4 text-2xl text-primary">{capability.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-gray-400">{capability.description}</p>
+                <p className="mt-3 text-base leading-relaxed text-gray-300">{capability.description}</p>
                 <ul className="mt-6 space-y-3 border-t border-primary/10 pt-5">
                   {capability.bullets.map((bullet) => (
-                    <li className="flex gap-3 text-xs text-primary/65" key={bullet}>
+                    <li className="flex gap-3 text-sm leading-relaxed text-primary/85" key={bullet}>
                       <Check className="h-3.5 w-3.5 flex-none" />
                       {bullet}
                     </li>
@@ -794,7 +794,7 @@ function App() {
             <h2 className="mt-6 text-3xl leading-none sm:text-4xl md:text-5xl">
               One system from <span className="font-serif italic text-primary/70">product truth</span> to early believers.
             </h2>
-            <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-gray-400">
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-gray-300 md:text-lg">
               Workshops, content, partnerships, and experiments become more useful when every step feeds the next one.
             </p>
           </div>
@@ -813,7 +813,7 @@ function App() {
                   {index < growthStages.length - 1 ? <ArrowRight className="h-3.5 w-3.5 text-primary/30" /> : null}
                 </div>
                 <h3 className="mt-6 text-lg text-primary">{title}</h3>
-                <p className="mt-3 text-xs leading-relaxed text-gray-500">{description}</p>
+                <p className="mt-3 text-sm leading-relaxed text-gray-300">{description}</p>
               </motion.article>
             ))}
           </div>
@@ -864,7 +864,7 @@ function App() {
               <article className="rounded-[8px] bg-black/40 p-5" key={path.title}>
                 <p className="text-[9px] uppercase tracking-[0.18em] text-primary/35">0{index + 1}</p>
                 <h3 className="mt-4 text-xl text-primary">{path.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-gray-500">{path.description}</p>
+                <p className="mt-3 text-base leading-relaxed text-gray-300">{path.description}</p>
               </article>
             ))}
           </div>
