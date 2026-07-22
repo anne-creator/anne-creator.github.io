@@ -49,7 +49,15 @@ export type GtmStory = {
 
 export const linkedinUrl = 'https://www.linkedin.com/in/anneliu49/';
 export const contactEmail = 'anneliu49@gmail.com';
-export const contactEmailHref = `mailto:${contactEmail}`;
+export const contactEmailHref = `mailto:${contactEmail}?subject=${encodeURIComponent(
+  'AI startup collaboration',
+)}&body=${encodeURIComponent(`Hi Anne,
+
+Company:
+What we’re building:
+What you’d like to explore:
+Timeline:
+`)}`;
 
 export const proofLinks: ProofSource[] = [
   {

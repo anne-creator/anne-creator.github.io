@@ -1,6 +1,6 @@
 # Project Structure
 
-Last updated: 2026-07-22 00:18:00 UTC
+Last updated: 2026-07-22 00:25:00 UTC
 
 ## Project Structure
 
@@ -66,7 +66,7 @@ Last updated: 2026-07-22 00:18:00 UTC
 
 - Data-like files: 8
 - `.json`: 8
-- Public contact email: `anneliu49@gmail.com`.
+- Public contact email: `anneliu49@gmail.com`, with a prefilled collaboration subject and qualification prompts.
 - WeChat QR asset: `src/assets/wechat-qr.jpg`.
 
 ## Feature Specs
@@ -91,7 +91,7 @@ Last updated: 2026-07-22 00:18:00 UTC
 - Hero section plays the bundled local MP4 instead of a remote CloudFront video URL.
 - Mobile loads a dedicated portrait hero video; desktop keeps the original landscape MP4, and reduced-motion/Save-Data users receive a static poster.
 - Page metadata identifies the site as `Anne Liu | Technical GTM for AI Startups` and supplies canonical, Open Graph, and Twitter fields.
-- Hero and closing collaboration CTAs open an email to Anne; a WeChat icon beside LinkedIn opens the supplied QR code on hover, keyboard focus, or mobile tap.
+- Hero and closing collaboration CTAs open a prefilled email to Anne (`AI startup collaboration` plus company, product, collaboration, and timeline prompts); a WeChat icon beside LinkedIn opens the supplied QR code on hover, keyboard focus, or mobile tap.
 - A compact desktop hero header links directly to the Approach, Stories, Work, and Contact sections.
 - OpenDeploy resource document organizes supplied founder notes into a durable Markdown brief with dated traction, public source links, positioning, product narrative, GTM, competition, fundraising frame, and verification notes.
 - GitHub Pages workflow publishes the Vite build artifact from `main` to the personal website at `anne-creator.github.io`.
@@ -106,6 +106,7 @@ Last updated: 2026-07-22 00:18:00 UTC
 
 - 2026-07-22 00:09:47 UTC: Feature update finalized — Refactor portfolio around technical GTM
 - 2026-07-22 00:18:00 UTC: Add email collaboration CTAs, a responsive WeChat QR popover, larger hero supporting type, and direct desktop section navigation.
+- 2026-07-22 00:25:00 UTC: Prefill collaboration email CTAs with a useful inquiry template.
 - 2026-05-27 21:15:11 UTC: Bootstrap project documentation.
 - 2026-05-27 22:25:00 UTC: Implement Anne Liu personal portfolio landing page.
 - 2026-05-27 21:54:00 UTC: Add explicit Vite production start command for OpenDeploy.
