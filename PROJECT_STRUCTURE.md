@@ -1,82 +1,83 @@
 # Project Structure
 
-Last updated: 2026-06-08 04:26:39 UTC
+Last updated: 2026-07-22 00:09:47 UTC
 
 ## Project Structure
 
-- `index.html` loads the Google fonts and mounts the React app.
-- `src/App.tsx` contains the single-page portfolio, data arrays, animation components, proof links, clickable work cards, and project popup modal.
-- `src/index.css` defines Tailwind layers, global font/background styles, and SVG noise utilities.
-- `src/assets/` stores portfolio proof images, the Posterlytics SVG card visual, the Comics character sheet, and the local hero MP4.
-- Tailwind, Vite, PostCSS, and TypeScript configs live at the project root.
-- `.github/workflows/deploy-pages.yml` builds the Vite app and deploys `dist/` to GitHub Pages for the personal website repository.
-- `.opendeploy/project.json` stores the saved OpenDeploy project/service context.
-- `.opendeploy/service.json` stores the OpenDeploy service body used for the current Vite web service.
-- `CODING_SESSION_2026-05-31.md` records the OpenDeploy install, deploy, claim link, live URL, and verification details for the May 30-31 deployment session.
-- `opendeploy_resource.md` is an internal OpenDeploy strategy, positioning, GTM, competitive, investor, QA, and source-map resource.
+- root files: 14 files
+- `.github/`: 1 file
+- `.opendeploy/`: 3 files
+- `public/`: 1 file
+- `src/`: 20 files
 
 ### File Tree
 
-```text
-.
-├── index.html
-├── package.json
-├── postcss.config.js
-├── CODING_SESSION_2026-05-31.md
-├── opendeploy_resource.md
-├── .opendeploy
-│   ├── project.json
-│   └── service.json
-├── .github
-│   └── workflows
-│       └── deploy-pages.yml
-├── src
-│   ├── App.tsx
-│   ├── assets
-│   ├── index.css
-│   ├── main.tsx
-│   └── vite-env.d.ts
-├── tailwind.config.js
-├── tsconfig.app.json
-├── tsconfig.json
-├── tsconfig.node.json
-└── vite.config.ts
-```
+- `.gitignore`
+- `CODING_SESSION.md`
+- `PROJECT_STRUCTURE.md`
+- `girl_personal portfolio.mp4`
+- `index.html`
+- `opendeploy_resource.md`
+- `package-lock.json`
+- `package.json`
+- `postcss.config.js`
+- `tailwind.config.js`
+- `tsconfig.app.json`
+- `tsconfig.json`
+- `tsconfig.node.json`
+- `vite.config.ts`
+- `.github/workflows/deploy-pages.yml`
+- `.opendeploy/plan.json`
+- `.opendeploy/project.json`
+- `.opendeploy/service.json`
+- `public/og-cover.jpg`
+- `src/App.tsx`
+- `src/index.css`
+- `src/main.tsx`
+- `src/portfolioData.ts`
+- `src/vite-env.d.ts`
+- `src/assets/civil-ai-zation.png`
+- `src/assets/comics-character-sheet.png`
+- `src/assets/eazo-gtm.png`
+- `src/assets/eazo-moment.png`
+- `src/assets/eazo-update.png`
+- `src/assets/forge-redemption.jpg`
+- `src/assets/girl-personal-portfolio.mp4`
+- `src/assets/groundtruth.png`
+- `src/assets/hero-desktop-poster.webp`
+- `src/assets/hero-mobile-poster.webp`
+- `src/assets/hero-mobile.mp4`
+- `src/assets/posterlytics.svg`
+- `src/assets/visual-design.jpg`
+- `src/assets/visual-design.png`
+- `src/assets/white-dress.png`
 
 ## Workflow
 
-- Install dependencies: `npm install`
-- Run locally: `npm run dev`
-- Validate production build: `npm run build`
-- Publish GitHub Pages: push to `main`; GitHub Actions builds and deploys `dist/`.
-- Run production preview: `npm run start`
-- Deploy to saved OpenDeploy service: upload source, then create/wait for deployment using the saved context.
+- Node scripts: `npm run build`, `npm run dev`, `npm run preview`, `npm run start`
 
 ## Module Inputs And Outputs
 
-- `src/main.tsx` mounts `App` into `#root`.
-- `src/App.tsx` imports static assets and outputs the full landing page UI.
-- `src/index.css` supplies global Tailwind/CSS utilities consumed by the React components.
+- `src/`: Inputs and outputs need confirmation from implementation details.
 
 ## Data Stats Change
 
-- Added three local visual proof assets: EAZO screenshot, EAZO update screenshot, and White Dress illustration.
-- Added a local hero video asset from the supplied `girl_personal portfolio.mp4`.
-- Added static project/social links for LinkedIn, GitHub, Xiaohongshu, Dribbble, Notion, Devpost, and live demos.
-- Added Comics project links for two LinkedIn comic releases.
-- Added a Comics character sheet image for the Comics Work card.
-- Updated the public RedNote audience proof stat to 2,300 followers.
-- Added Posterlytics project links for the live InsForge site and LinkedIn launch post.
-- Added a local Posterlytics SVG card visual representing poster generation, QR attribution, and placement analytics.
+- Data-like files: 8
+- `.json`: 8
 
 ## Feature Specs
 
-- Single-page personal portfolio for Anne Liu with Hero, About/Proof, and Work sections.
+- Single-page personal portfolio for Anne Liu with Hero, Capability Proof, Community-Led Growth Engine, GTM Stories, Technical Work, and Collaboration sections.
 - Visual system follows a dark cinematic cream palette with Almarai and Instrument Serif fonts.
+- Public positioning presents Anne as a technical GTM builder helping AI startups turn technical products into trusted communities and early adoption.
+- The Community-Led Growth Engine connects product understanding, demonstrations, gatherings, follow-up, distribution, early users, and learning.
+- Three detailed GTM stories cover community/event activation, technical storytelling/builder distribution, and measurable growth experiments.
+- Typed claim statuses distinguish completed proof from active work and planned experiments.
+- Proof triggers reveal local browser-style summaries on hover/focus or mobile tap; original third-party sources remain optional external evidence.
 - Work cards summarize ForgeRedemption, Posterlytics, EAZO GTM Tool, GroundTruth/nHackathon, Civil-AI-zation, Creative Archive, and Comics.
 - Each Work card opens a popup with simple project details and external proof links.
-- Work cards use full uncropped images with title, eyebrow, number, link count, and Open project CTA only.
-- Work order highlights ForgeRedemption first, Posterlytics second, EAZO GTM Tool third, and GroundTruth/nHackathon fourth.
+- Work cards use full uncropped images with title, eyebrow, description, two proof bullets, source count, and Open project CTA.
+- Work order highlights GTM relevance: EAZO GTM Tool, Posterlytics, ForgeRedemption, and GroundTruth/nHackathon first.
 - ForgeRedemption and EAZO GTM Tool copy calls out their cash-prize wins.
 - Posterlytics copy calls out the InsForge Hackathon win, URL-to-poster generation, per-placement QR attribution, and scan/conversion analytics.
 - Framer Motion powers pull-up text, card entrance animation, and scroll-linked About text reveal.
@@ -84,13 +85,20 @@ Last updated: 2026-06-08 04:26:39 UTC
 - Vite preview allows the deployed OpenDeploy host so the production URL can serve the app.
 - Vite preview allows OpenDeploy subdomains so newly created OpenDeploy auto domains can serve the app.
 - Hero section plays the bundled local MP4 instead of a remote CloudFront video URL.
+- Mobile loads a dedicated portrait hero video; desktop keeps the original landscape MP4, and reduced-motion/Save-Data users receive a static poster.
+- Page metadata identifies the site as `Anne Liu | Technical GTM for AI Startups` and supplies canonical, Open Graph, and Twitter fields.
 - OpenDeploy resource document organizes supplied founder notes into a durable Markdown brief with dated traction, public source links, positioning, product narrative, GTM, competition, fundraising frame, and verification notes.
 - GitHub Pages workflow publishes the Vite build artifact from `main` to the personal website at `anne-creator.github.io`.
 - About proof cards show the current RedNote audience milestone of 2,300 followers.
 - Hero profile copy positions Anne as an OpenDeploy Co-Founder and 3x hackathon winner.
 
+## Child Project Rollups
+
+- No child project rollups recorded yet.
+
 ## Maintenance Log
 
+- 2026-07-22 00:09:47 UTC: Feature update finalized — Refactor portfolio around technical GTM
 - 2026-05-27 21:15:11 UTC: Bootstrap project documentation.
 - 2026-05-27 22:25:00 UTC: Implement Anne Liu personal portfolio landing page.
 - 2026-05-27 21:54:00 UTC: Add explicit Vite production start command for OpenDeploy.
@@ -103,3 +111,4 @@ Last updated: 2026-06-08 04:26:39 UTC
 - 2026-06-08 00:00:00 UTC: Create GitHub Pages workflow for the `anne-creator.github.io` personal website repository.
 - 2026-06-08 01:00:00 UTC: Update RedNote follower proof stat to 2,300.
 - 2026-06-08 04:26:39 UTC: Add Posterlytics as the second project card and update hero proof copy to 3x hackathon winner.
+- 2026-07-21 23:58:00 UTC: Refactor the portfolio around technical GTM and community-led growth, add typed proof stories and previews, optimize mobile hero media, and update social metadata.

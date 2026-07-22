@@ -1,194 +1,69 @@
-import { ArrowRight, Check, ExternalLink, Linkedin, Sparkles, X } from 'lucide-react';
+import {
+  ArrowRight,
+  Check,
+  ExternalLink,
+  Linkedin,
+  Sparkles,
+  X,
+} from 'lucide-react';
 import {
   AnimatePresence,
   motion,
   useInView,
+  useReducedMotion,
   useScroll,
   useTransform,
   type MotionValue,
 } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
-import civilAiZationImage from './assets/civil-ai-zation.png';
-import comicsCharacterSheetImage from './assets/comics-character-sheet.png';
-import eazoGtmImage from './assets/eazo-gtm.png';
-import forgeRedemptionImage from './assets/forge-redemption.jpg';
-import heroVideo from './assets/girl-personal-portfolio.mp4';
-import groundTruthImage from './assets/groundtruth.png';
-import posterlyticsImage from './assets/posterlytics.svg';
-import visualDesignImage from './assets/visual-design.png';
+import { useEffect, useId, useRef, useState } from 'react';
+import heroDesktopPoster from './assets/hero-desktop-poster.webp';
+import heroMobilePoster from './assets/hero-mobile-poster.webp';
+import heroMobileVideo from './assets/hero-mobile.mp4';
+import heroDesktopVideo from './assets/girl-personal-portfolio.mp4';
+import {
+  aboutGalleryItems,
+  capabilities,
+  collaborationPaths,
+  growthStages,
+  gtmStories,
+  linkedinUrl,
+  proofLinks,
+  proofStats,
+  workItems,
+  type ClaimStatus,
+  type GtmStory,
+  type ProofSource,
+  type WorkItem,
+} from './portfolioData';
 
-const textColor = '#E1E0CC';
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(() =>
+    typeof window === 'undefined' ? false : window.matchMedia(query).matches,
+  );
 
-type LinkItem = {
-  label: string;
-  href: string;
-};
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    const update = () => setMatches(media.matches);
+    update();
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, [query]);
 
-type WorkItem = {
-  number: string;
-  title: string;
-  eyebrow: string;
-  description: string;
-  bullets: string[];
-  detailIntro: string;
-  detailBullets: string[];
-  links: LinkItem[];
-  image?: string;
-};
+  return matches;
+}
 
-const workItems: WorkItem[] = [
-  {
-    number: '01',
-    title: 'ForgeRedemption',
-    eyebrow: '1st place / $2,000 cash + 3,000 credits',
-    description:
-      'Autonomous multi-agent prison escape game where LLM characters coordinate, search the web, build RAG memory, and narrate infrastructure actions live.',
-    bullets: ['Ship to Prod Top Overall', 'InsForge + Nexla/TinyFish', 'pgvector RAG + Vapi narration'],
-    detailIntro:
-      'ForgeRedemption won 1st place with $2,000 cash and 3,000 credits, built around a live prison escape story, agent coordination, and production infrastructure.',
-    detailBullets: [
-      'Awarded $2,000 cash plus 3,000 credits for the hackathon win.',
-      'LLM characters coordinate decisions and actions across a shared game loop.',
-      'RAG memory and web search give agents context during play.',
-      'Live narration turns infrastructure work into a visible product moment.',
-    ],
-    links: [
-      { label: 'Devpost', href: 'https://devpost.com/software/forgeredemption' },
-      { label: 'Live', href: 'https://9eek84vj.insforge.site/landing' },
-      { label: 'GitHub', href: 'https://github.com/NaichuanZhang/ForgeRedemption' },
-    ],
-    image: forgeRedemptionImage,
-  },
-  {
-    number: '02',
-    title: 'Posterlytics',
-    eyebrow: 'InsForge Hackathon winner',
-    description:
-      'Turns any product URL into an on-brand promotional poster with per-placement QR codes that track scans, conversions, and channel performance automatically.',
-    bullets: ['URL-to-poster agent', 'Per-placement QR attribution', 'Scan + conversion dashboard'],
-    detailIntro:
-      'Posterlytics closes the gap between building and distribution: paste a product URL, get an on-brand poster, and see which placement actually drives traction.',
-    detailBullets: [
-      'Agentically extracts product assets, color palette, typography, imagery, and brand tone from a supplied URL.',
-      'Generates poster copy and a hosted landing page that are ready for the target audience.',
-      'Creates unique QR codes for placements like Instagram, LinkedIn, and physical posters.',
-      'Tracks scans, visitors, conversions, and per-placement channel performance.',
-      'Built with React, TypeScript, Postgres row-level security, and GPT-4o via InsForge for text and image generation.',
-    ],
-    links: [
-      { label: 'Website', href: 'https://3f9q2998.insforge.site/' },
-      { label: 'LinkedIn post', href: 'https://www.linkedin.com/feed/update/urn:li:activity:7469518204747399168/' },
-    ],
-    image: posterlyticsImage,
-  },
-  {
-    number: '03',
-    title: 'EAZO GTM Tool',
-    eyebrow: 'EAZO HackSong Asia 1st / $5,000 cash',
-    description:
-      'GTM attribution and founder-targeting workflow turning channel data, tracking links, and outreach judgment into reusable growth infrastructure.',
-    bullets: ['Channel-level conversion view', 'Founder/client targeting', 'Reusable GTM operating system'],
-    detailIntro:
-      'EAZO GTM Tool won 1st place in EAZO HackSong Asia region with $5,000 cash, turning hackathon growth work into reusable GTM infrastructure.',
-    detailBullets: [
-      'Won 1st place in EAZO HackSong Asia region with a $5,000 cash prize.',
-      'Tracks channel-level performance for clearer growth decisions.',
-      'Packages targeting and outreach judgment into repeatable workflows.',
-      'Uses public proof to show the outcome and momentum behind the work.',
-    ],
-    links: [{ label: 'LinkedIn proof', href: 'https://www.linkedin.com/feed/update/urn:li:activity:7464459906998317056/' }],
-    image: eazoGtmImage,
-  },
-  {
-    number: '04',
-    title: 'GroundTruth / nHackathon',
-    eyebrow: 'Founder decision engine',
-    description:
-      'A company-brain concept for cross-domain startup decisions, combining Hyperspell context, InsForge orchestration, and Neo4j-style dependency reasoning.',
-    bullets: ['Slack/docs/CRM/finance context', 'Conflicting-goal reasoning', 'Founder approval loop'],
-    detailIntro:
-      'GroundTruth explores how a founder-facing system can combine scattered company context into clearer operating decisions.',
-    detailBullets: [
-      'Connects product, customer, finance, and team context into one decision view.',
-      'Models conflicting goals so tradeoffs are visible before action.',
-      'Keeps founders in the approval loop for high-impact decisions.',
-    ],
-    links: [
-      { label: 'Live', href: 'https://groundtruth-blush.vercel.app/' },
-      { label: 'GitHub', href: 'https://github.com/anne-creator/groundtruth' },
-    ],
-    image: groundTruthImage,
-  },
-  {
-    number: '05',
-    title: 'Civil-AI-zation',
-    eyebrow: 'AI arena system',
-    description:
-      'A realtime spectator game with LLM agents battling on a 5x5 grid, persistent game state, rules validation, and narration for non-technical viewers.',
-    bullets: ['5x5 agent battlefield', 'Realtime events', 'Narrated AI gameplay'],
-    detailIntro:
-      'Civil-AI-zation is a spectator-friendly AI arena where agents compete inside a constrained board game system.',
-    detailBullets: [
-      'Agents act inside a 5x5 battlefield with persistent state.',
-      'Rules validation keeps gameplay legible and consistent.',
-      'Narration makes AI behavior easier for non-technical viewers to follow.',
-    ],
-    links: [{ label: 'GitHub', href: 'https://github.com/NaichuanZhang/Civil-AI-zation' }],
-    image: civilAiZationImage,
-  },
-  {
-    number: '06',
-    title: 'Illustration & Visual',
-    eyebrow: 'Creative archive',
-    description: 'My illustration and design works',
-    bullets: ['Bright Light Art Studio', 'Oil painting + illustration', 'Design taste as product leverage'],
-    detailIntro:
-      'Illustration & Visual collects the creative practice behind the taste, composition, and storytelling that also show up in product work.',
-    detailBullets: [
-      'Includes illustration, oil painting, and visual design experiments.',
-      'Treats visual taste as part of product communication.',
-      'Connects independent creative work with public portfolio proof.',
-    ],
-    links: [{ label: 'Dribbble', href: 'https://dribbble.com/brightlightartstudio' }],
-    image: visualDesignImage,
-  },
-  {
-    number: '07',
-    title: 'Comics',
-    eyebrow: 'Visual storytelling',
-    description: 'Two short comics exploring product, identity, and builder culture.',
-    bullets: ['LinkedIn comic release', 'Visual storytelling', 'Public creative work'],
-    detailIntro:
-      'Comics is a small public storytelling series using visual scenes to talk about building, identity, and product culture.',
-    detailBullets: [
-      'Two finished comic posts are ready to share as creative proof.',
-      'The format makes builder ideas feel more personal and memorable.',
-      'The series connects illustration practice with public-facing product narrative.',
-    ],
-    links: [
-      { label: 'Comic 01', href: 'https://www.linkedin.com/feed/update/urn:li:activity:7448957371755900929/' },
-      { label: 'Comic 02', href: 'https://www.linkedin.com/feed/update/urn:li:activity:7453141194869665792/' },
-    ],
-    image: comicsCharacterSheetImage,
-  },
-];
-
-const proofLinks: LinkItem[] = [
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/anneliu49/' },
-  { label: 'GitHub', href: 'https://github.com/anne-creator?tab=repositories' },
-  { label: 'Xiaohongshu', href: 'https://www.xiaohongshu.com/user/profile/5c7f5fee00000000120200d7' },
-  { label: 'Dribbble', href: 'https://dribbble.com/brightlightartstudio' },
-];
-
-const aboutGalleryItems = [
-  { label: 'Visual & Design', image: comicsCharacterSheetImage, className: 'col-span-2 h-72 md:h-80' },
-  { label: 'ForgeRedemption', image: forgeRedemptionImage, className: 'h-36 md:h-44' },
-  { label: 'Civil-AI-zation', image: civilAiZationImage, className: 'h-36 md:h-44' },
-];
-
-function WordsPullUp({ text, className = '', showAsterisk = false }: { text: string; className?: string; showAsterisk?: boolean }) {
+function WordsPullUp({
+  text,
+  className = '',
+  showAsterisk = false,
+}: {
+  text: string;
+  className?: string;
+  showAsterisk?: boolean;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const reduceMotion = useReducedMotion();
   const words = text.split(' ');
 
   return (
@@ -197,9 +72,9 @@ function WordsPullUp({ text, className = '', showAsterisk = false }: { text: str
         <span className="mr-[0.08em] inline-block overflow-hidden last:mr-0" key={`${word}-${index}`}>
           <motion.span
             className="relative inline-block"
-            initial={{ y: 24, opacity: 0 }}
+            initial={reduceMotion ? false : { y: 24, opacity: 0 }}
             animate={isInView ? { y: 0, opacity: 1 } : { y: 24, opacity: 0 }}
-            transition={{ duration: 0.8, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, delay: reduceMotion ? 0 : index * 0.08, ease: [0.16, 1, 0.3, 1] }}
           >
             {word}
             {showAsterisk && index === words.length - 1 ? (
@@ -221,6 +96,7 @@ function WordsPullUpMultiStyle({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const reduceMotion = useReducedMotion();
   const words = segments.flatMap((segment) =>
     segment.text.split(' ').map((word) => ({ word, className: segment.className ?? '' })),
   );
@@ -231,9 +107,9 @@ function WordsPullUpMultiStyle({
         <span className="inline-block overflow-hidden pr-[0.18em]" key={`${item.word}-${index}`}>
           <motion.span
             className={`inline-block ${item.className}`}
-            initial={{ y: 20, opacity: 0 }}
+            initial={reduceMotion ? false : { y: 20, opacity: 0 }}
             animate={isInView ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
-            transition={{ duration: 0.7, delay: index * 0.045, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.7, delay: reduceMotion ? 0 : index * 0.045, ease: [0.16, 1, 0.3, 1] }}
           >
             {item.word}
           </motion.span>
@@ -266,11 +142,16 @@ function AnimatedLetter({
 
 function ScrollRevealText({ text }: { text: string }) {
   const ref = useRef<HTMLParagraphElement>(null);
+  const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.8', 'end 0.2'] });
   const chars = Array.from(text);
 
+  if (reduceMotion) {
+    return <p className="mx-auto mt-8 max-w-3xl text-sm leading-relaxed text-[#DEDBC8] md:text-base">{text}</p>;
+  }
+
   return (
-    <p ref={ref} className="mx-auto mt-8 max-w-3xl text-xs leading-[1.45] text-[#DEDBC8] sm:text-sm md:text-base">
+    <p ref={ref} className="mx-auto mt-8 max-w-3xl text-sm leading-relaxed text-[#DEDBC8] md:text-base">
       <span className="sr-only">{text}</span>
       {chars.map((char, index) => (
         <AnimatedLetter
@@ -285,48 +166,177 @@ function ScrollRevealText({ text }: { text: string }) {
   );
 }
 
-function LinkPill({ link }: { link: LinkItem }) {
+function HeroMedia() {
+  const isMobile = useMediaQuery('(max-width: 767px)');
+  const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
+  const [saveData] = useState(() => {
+    if (typeof navigator === 'undefined') return false;
+    return Boolean((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData);
+  });
+  const videoSource = isMobile ? heroMobileVideo : heroDesktopVideo;
+  const posterSource = isMobile ? heroMobilePoster : heroDesktopPoster;
+
+  if (prefersReducedMotion || saveData) {
+    return <img className="absolute inset-0 h-full w-full object-cover" src={posterSource} alt="" />;
+  }
+
   return (
-    <a
-      className="group inline-flex items-center gap-2 rounded-full border border-primary/15 px-3 py-2 text-xs text-primary/80 transition hover:border-primary/40 hover:text-primary"
-      href={link.href}
-      rel="noreferrer"
-      target="_blank"
+    <video
+      autoPlay
+      className="absolute inset-0 h-full w-full object-cover"
+      key={videoSource}
+      loop
+      muted
+      playsInline
+      poster={posterSource}
+      preload="auto"
+      src={videoSource}
+    />
+  );
+}
+
+function ProofPreview({ source }: { source: ProofSource }) {
+  const [open, setOpen] = useState(false);
+  const generatedId = useId();
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+  };
+
+  const scheduleClose = () => {
+    cancelClose();
+    closeTimer.current = setTimeout(() => setOpen(false), 120);
+  };
+
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    const onPointerDown = (event: PointerEvent) => {
+      if (!wrapperRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('pointerdown', onPointerDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener('pointerdown', onPointerDown);
+      cancelClose();
+    };
+  }, [open]);
+
+  const previewId = `proof-${generatedId.replace(/:/g, '')}`;
+
+  return (
+    <div
+      className="relative w-full sm:w-auto"
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) scheduleClose();
+      }}
+      onFocus={cancelClose}
+      onMouseEnter={() => {
+        cancelClose();
+        setOpen(true);
+      }}
+      onMouseLeave={scheduleClose}
+      ref={wrapperRef}
     >
-      {link.label}
-      <ExternalLink className="h-3.5 w-3.5 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-    </a>
+      <button
+        aria-controls={previewId}
+        aria-expanded={open}
+        className="group inline-flex w-full items-center justify-between gap-2 rounded-full border border-primary/15 px-3 py-2 text-left text-xs text-primary/80 transition hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 sm:w-auto"
+        onClick={() => setOpen((value) => !value)}
+        type="button"
+      >
+        <span>{source.label}</span>
+        <span className="text-[9px] uppercase tracking-[0.14em] text-primary/40">proof</span>
+      </button>
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            animate={{ opacity: 1, y: 0 }}
+            className="relative z-40 mt-2 w-full rounded-[8px] border border-primary/15 bg-[#171717] p-3 shadow-glow md:absolute md:left-0 md:top-full md:w-72"
+            exit={{ opacity: 0, y: -4 }}
+            id={previewId}
+            initial={{ opacity: 0, y: -4 }}
+            role="region"
+            transition={{ duration: 0.16 }}
+          >
+            {source.previewImage ? (
+              <div className="mb-3 h-32 overflow-hidden rounded-[6px] bg-[#E1E0CC]">
+                <img className="h-full w-full object-contain" src={source.previewImage} alt="" />
+              </div>
+            ) : null}
+            <p className="text-[9px] uppercase tracking-[0.16em] text-primary/45">{source.kind}</p>
+            <p className="mt-2 text-xs leading-relaxed text-gray-300">{source.summary}</p>
+            {source.dateOrResult ? <p className="mt-2 text-[11px] text-primary/65">{source.dateOrResult}</p> : null}
+            <a
+              className="mt-3 inline-flex items-center gap-2 text-xs text-primary transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+              href={source.href}
+              rel="noreferrer"
+              target="_blank"
+            >
+              Open original
+              <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function ProofList({ sources }: { sources: ProofSource[] }) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {sources.map((source) => (
+        <ProofPreview key={`${source.label}-${source.href}`} source={source} />
+      ))}
+    </div>
+  );
+}
+
+function StatusPill({ status }: { status: ClaimStatus }) {
+  const labels: Record<ClaimStatus, string> = {
+    verified: 'Proof so far',
+    active: 'Active work',
+    planned: 'Experimenting next',
+  };
+
+  return (
+    <span className="inline-flex rounded-full border border-primary/15 bg-black/30 px-3 py-2 text-[9px] uppercase tracking-[0.18em] text-primary/65">
+      {labels[status]}
+    </span>
   );
 }
 
 function WorkCard({ item, index, onOpen }: { item: WorkItem; index: number; onOpen: () => void }) {
   const ref = useRef<HTMLButtonElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const reduceMotion = useReducedMotion();
 
   return (
     <motion.button
-      ref={ref}
-      className="group flex min-h-[430px] flex-col overflow-hidden rounded-[8px] bg-[#212121] text-left shadow-glow outline-none transition focus-visible:ring-2 focus-visible:ring-primary/70"
-      initial={{ opacity: 0, scale: 0.95 }}
       animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+      className="group flex min-h-[560px] flex-col overflow-hidden rounded-[8px] bg-[#212121] text-left shadow-glow outline-none transition focus-visible:ring-2 focus-visible:ring-primary/70"
+      initial={reduceMotion ? false : { opacity: 0, scale: 0.95 }}
       onClick={onOpen}
+      ref={ref}
+      transition={{ duration: 0.65, delay: reduceMotion ? 0 : index * 0.08, ease: [0.22, 1, 0.36, 1] }}
       type="button"
-      transition={{ duration: 0.65, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
     >
       {item.image ? (
-        <div className="relative flex h-72 items-center justify-center overflow-hidden bg-[#E1E0CC] p-3">
-          <img className="h-full w-full object-contain transition duration-700 group-hover:scale-[1.03]" src={item.image} alt="" />
+        <div className="relative flex h-64 items-center justify-center overflow-hidden bg-[#E1E0CC] p-3">
+          <img
+            className="h-full w-full object-contain transition duration-700 group-hover:scale-[1.03]"
+            src={item.image}
+            alt=""
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-[#212121] via-transparent to-transparent" />
         </div>
-      ) : (
-        <div className="relative flex h-72 items-center justify-center overflow-hidden bg-black">
-          <div className="bg-noise absolute inset-0 opacity-[0.18]" />
-          <div className="absolute inset-4 rounded-[8px] border border-primary/10" />
-          <div className="absolute bottom-5 left-5 right-5 text-[11px] uppercase tracking-[0.18em] text-primary/55">
-            system / product / proof
-          </div>
-        </div>
-      )}
+      ) : null}
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -335,8 +345,19 @@ function WorkCard({ item, index, onOpen }: { item: WorkItem; index: number; onOp
           </div>
           <span className="text-sm text-primary/40">{item.number}</span>
         </div>
+        <p className="mt-5 text-sm leading-relaxed text-gray-400">{item.description}</p>
+        <ul className="mt-4 space-y-2">
+          {item.bullets.slice(0, 2).map((bullet) => (
+            <li className="flex gap-2 text-xs leading-snug text-primary/55" key={bullet}>
+              <span className="mt-1.5 h-1 w-1 flex-none rounded-full bg-primary/50" />
+              {bullet}
+            </li>
+          ))}
+        </ul>
         <div className="mt-auto flex items-center justify-between gap-4 pt-6">
-          <span className="text-[11px] uppercase tracking-[0.18em] text-primary/50">{item.links.length} link{item.links.length === 1 ? '' : 's'}</span>
+          <span className="text-[10px] uppercase tracking-[0.16em] text-primary/45">
+            {item.links.length} proof source{item.links.length === 1 ? '' : 's'}
+          </span>
           <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 px-3 py-2 text-xs text-primary/80 transition group-hover:border-primary/40 group-hover:text-primary">
             Open project
             <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
@@ -348,42 +369,38 @@ function WorkCard({ item, index, onOpen }: { item: WorkItem; index: number; onOp
 }
 
 function ProjectModal({ item, onClose }: { item: WorkItem; onClose: () => void }) {
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        onClose();
-      }
-    };
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    closeButtonRef.current?.focus();
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [onClose]);
 
   return (
     <motion.div
+      animate={{ opacity: 1 }}
       aria-labelledby="project-modal-title"
       aria-modal="true"
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 px-4 py-6 backdrop-blur-md"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      onClick={onClose}
+      initial={{ opacity: 0 }}
       onPointerDown={onClose}
       role="dialog"
     >
-      <button
-        aria-label="Close project popup backdrop"
-        className="absolute inset-0 h-full w-full cursor-default"
-        onClick={onClose}
-        onPointerDown={onClose}
-        type="button"
-      />
       <motion.div
-        className="relative z-10 max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-[8px] border border-primary/15 bg-[#101010] p-5 text-[#E1E0CC] shadow-glow sm:p-7"
-        initial={{ opacity: 0, scale: 0.94, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
+        className="relative z-10 max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-[8px] border border-primary/15 bg-[#101010] p-5 text-[#E1E0CC] shadow-glow sm:p-7"
         exit={{ opacity: 0, scale: 0.96, y: 12 }}
-        onClick={(event) => event.stopPropagation()}
+        initial={{ opacity: 0, scale: 0.94, y: 20 }}
         onPointerDown={(event) => event.stopPropagation()}
         transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
       >
@@ -391,11 +408,11 @@ function ProjectModal({ item, onClose }: { item: WorkItem; onClose: () => void }
           aria-label="Close project popup"
           className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-primary/15 text-primary/70 transition hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
           onClick={onClose}
+          ref={closeButtonRef}
           type="button"
         >
           <X className="h-4 w-4" />
         </button>
-
         <p className="pr-12 text-[10px] uppercase tracking-[0.18em] text-primary/55">{item.eyebrow}</p>
         <div className="mt-3 flex items-start justify-between gap-6 pr-12">
           <h3 className="text-3xl leading-none text-[#E1E0CC] sm:text-4xl" id="project-modal-title">
@@ -413,84 +430,163 @@ function ProjectModal({ item, onClose }: { item: WorkItem; onClose: () => void }
             </li>
           ))}
         </ul>
-        <div className="mt-7 flex flex-wrap gap-2 border-t border-primary/10 pt-5">
-          {item.links.map((link) => (
-            <LinkPill link={link} key={link.href} />
-          ))}
+        <div className="mt-7 border-t border-primary/10 pt-5">
+          <p className="mb-3 text-[9px] uppercase tracking-[0.18em] text-primary/45">Supporting proof</p>
+          <ProofList sources={item.links} />
         </div>
       </motion.div>
     </motion.div>
   );
 }
 
+function StoryList({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div>
+      <p className="text-[9px] uppercase tracking-[0.18em] text-primary/45">{title}</p>
+      <ul className="mt-3 space-y-3">
+        {items.map((item) => (
+          <li className="flex gap-3 text-sm leading-relaxed text-gray-400" key={item}>
+            <Check className="mt-1 h-3.5 w-3.5 flex-none text-primary/70" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function GtmStoryCard({ story, index }: { story: GtmStory; index: number }) {
+  const ref = useRef<HTMLElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <motion.article
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
+      className="rounded-[8px] border border-primary/10 bg-[#101010] p-4 sm:p-6 lg:p-8"
+      initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+      ref={ref}
+      transition={{ duration: 0.7, delay: reduceMotion ? 0 : index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-12">
+        <div>
+          <div className="flex items-center justify-between gap-4">
+            <StatusPill status={story.status} />
+            <span className="text-sm text-primary/35">{story.number}</span>
+          </div>
+          <div className="mt-6 overflow-hidden rounded-[8px] bg-[#E1E0CC]">
+            <img className="h-64 w-full object-contain sm:h-80" src={story.image} alt={story.imageAlt} />
+          </div>
+          <p className="mt-5 text-[9px] uppercase tracking-[0.18em] text-primary/45">Why it matters</p>
+          <p className="mt-3 text-sm leading-relaxed text-primary/75">{story.startupValue}</p>
+        </div>
+        <div>
+          <h3 className="text-3xl leading-[0.98] text-[#E1E0CC] sm:text-4xl">{story.title}</h3>
+          <p className="mt-4 max-w-2xl font-serif text-xl italic leading-snug text-primary/80 sm:text-2xl">
+            {story.outcome}
+          </p>
+          <div className="mt-7 grid gap-6 border-y border-primary/10 py-6 sm:grid-cols-2">
+            <div>
+              <p className="text-[9px] uppercase tracking-[0.18em] text-primary/45">Context</p>
+              <p className="mt-3 text-sm leading-relaxed text-gray-400">{story.context}</p>
+            </div>
+            <div>
+              <p className="text-[9px] uppercase tracking-[0.18em] text-primary/45">My role</p>
+              <p className="mt-3 text-sm leading-relaxed text-gray-400">{story.role}</p>
+            </div>
+          </div>
+          <div className="mt-7 grid gap-8 xl:grid-cols-2">
+            <StoryList items={story.approach} title="How the system works" />
+            <StoryList items={story.proof} title="Proof so far" />
+          </div>
+          <div className="mt-8 rounded-[8px] bg-black/35 p-4">
+            <StoryList items={story.nextTests} title="What I’m testing next" />
+          </div>
+          <div className="mt-7">
+            <p className="mb-3 text-[9px] uppercase tracking-[0.18em] text-primary/45">Supporting proof</p>
+            <ProofList sources={story.sources} />
+          </div>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
 function App() {
   const [selectedProject, setSelectedProject] = useState<WorkItem | null>(null);
   const aboutText =
-    'I build the technical system, the product story, and the proof loop around it: AI agents, hackathon demos, GTM workflows, user feedback, public writing, and visual craft.';
+    'I work where product, story, and distribution meet: understanding the technical system, making the value legible, gathering the right people around it, and turning what we learn into the next growth decision.';
 
   return (
     <main className="min-h-screen bg-black text-[#E1E0CC]">
       <section className="relative h-screen p-4 md:p-6">
         <div className="relative h-full overflow-hidden rounded-2xl bg-[#101010] md:rounded-[2rem]">
-          <video
-            autoPlay
-            className="absolute inset-0 h-full w-full object-cover"
-            loop
-            muted
-            playsInline
-            src={heroVideo}
-          />
+          <HeroMedia />
           <div className="noise-overlay pointer-events-none absolute inset-0 opacity-[0.22] mix-blend-overlay" />
           <div
             className="absolute inset-0"
             style={{
               background:
-                'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 52%, rgba(0,0,0,0.58) 76%, rgba(0,0,0,0.94) 100%)',
+                'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.58) 72%, rgba(0,0,0,0.96) 100%)',
             }}
           />
-
           <div className="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-7 md:p-9">
             <div className="grid items-end gap-6 lg:grid-cols-12">
               <div className="lg:col-span-8">
-                <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-black/30 px-3 py-2 text-[10px] uppercase tracking-[0.18em] text-primary/70 backdrop-blur">
+                <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-black/30 px-3 py-2 text-[9px] uppercase tracking-[0.16em] text-primary/70 backdrop-blur sm:text-[10px] sm:tracking-[0.18em]">
                   <Sparkles className="h-3.5 w-3.5" />
-                  Forever Builder / OpenDeploy Co-Founder / Influencer
+                  Technical GTM Builder / AI Products / Community-Led Growth
                 </p>
-                <h1
-                  className="text-[18vw] font-medium leading-[0.85] text-[#E1E0CC] sm:text-[17vw] md:text-[16vw] lg:text-[14vw] xl:text-[13vw] 2xl:text-[12vw]"
-                >
+                <h1 className="text-[18vw] font-medium leading-[0.85] text-[#E1E0CC] sm:text-[17vw] md:text-[16vw] lg:text-[14vw] xl:text-[13vw] 2xl:text-[12vw]">
                   <WordsPullUp showAsterisk text="Anne Liu" />
                 </h1>
               </div>
               <div className="lg:col-span-4">
                 <motion.p
-                  className="max-w-md text-xs leading-[1.2] text-primary/70 sm:text-sm md:text-base"
-                  initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
+                  className="max-w-md text-sm leading-snug text-primary/85 md:text-base"
+                  initial={{ opacity: 0, y: 20 }}
                   transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  Forever Builder, OpenDeploy Co-Founder, and AI ecosystem influencer, 3x hackathon winner (tokens,
-                  MiraclePlus, and InsForge).
+                  I help AI startups turn technical products into communities people join, trust, and grow with.
+                </motion.p>
+                <motion.p
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-3 max-w-md text-xs leading-relaxed text-primary/55"
+                  initial={{ opacity: 0, y: 20 }}
+                  transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  Technical GTM strategy, product fluency, founder-led content, community programs, and real-world events.
+                </motion.p>
+                <motion.p
+                  animate={{ opacity: 1 }}
+                  className="mt-3 text-[9px] uppercase tracking-[0.14em] text-primary/45"
+                  initial={{ opacity: 0 }}
+                  transition={{ duration: 0.8, delay: 0.7 }}
+                >
+                  3× hackathon winner · AI product builder · Community-led GTM strategist
                 </motion.p>
                 <motion.div
-                  className="mt-6 flex flex-wrap gap-3"
-                  initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  className="mt-5 flex flex-wrap gap-3"
+                  initial={{ opacity: 0, y: 20 }}
+                  transition={{ duration: 0.8, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <a
                     className="group inline-flex items-center gap-2 rounded-full bg-primary py-2 pl-5 pr-2 text-sm font-medium text-black transition hover:gap-3 sm:text-base"
-                    href="#work"
+                    href={linkedinUrl}
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    View work
+                    Start a conversation
                     <span className="flex h-9 w-9 items-center justify-center rounded-full bg-black transition group-hover:scale-110 sm:h-10 sm:w-10">
                       <ArrowRight className="h-4 w-4 text-primary" />
                     </span>
                   </a>
                   <a
-                    aria-label="LinkedIn"
-                    className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/15 bg-black/30 text-primary/80 backdrop-blur transition hover:border-primary/40 hover:text-primary"
-                    href="https://www.linkedin.com/in/anneliu49/"
+                    aria-label="Connect with Anne Liu on LinkedIn"
+                    className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/15 bg-black/30 text-primary/80 backdrop-blur transition hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                    href={linkedinUrl}
                     rel="noreferrer"
                     target="_blank"
                   >
@@ -504,63 +600,124 @@ function App() {
       </section>
 
       <section className="bg-black px-4 py-16 sm:px-6 md:py-24" id="about">
-        <div className="mx-auto grid max-w-6xl gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="flex min-h-[560px] flex-col justify-center rounded-[8px] bg-[#101010] p-6 text-center sm:p-10">
-            <p className="text-[10px] uppercase tracking-[0.18em] text-primary sm:text-xs">Multidimensional builder</p>
-            <h2 className="mx-auto mt-6 max-w-3xl text-3xl leading-[0.98] sm:text-4xl sm:leading-[0.95] md:text-5xl lg:text-6xl xl:text-7xl">
-              <WordsPullUpMultiStyle
-                segments={[
-                  { text: 'I build AI products,' },
-                  { text: 'then make people care.', className: 'font-serif italic' },
-                ]}
-              />
-            </h2>
-            <ScrollRevealText text={aboutText} />
-            <div className="mx-auto mt-8 grid w-full max-w-2xl grid-cols-3 gap-2 text-left" id="proof">
-              {[
-                ['2,300', 'RedNote followers'],
-                ['2.7w', 'likes / saves'],
-                ['72', 'GitHub repositories'],
-              ].map(([value, label]) => (
-                <div className="rounded-[8px] bg-black/45 p-4" key={label}>
-                  <p className="text-2xl leading-none text-primary sm:text-3xl">{value}</p>
-                  <p className="mt-2 text-[11px] text-gray-500">{label}</p>
-                </div>
-              ))}
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="flex min-h-[560px] flex-col justify-center rounded-[8px] bg-[#101010] p-6 text-center sm:p-10">
+              <p className="text-[10px] uppercase tracking-[0.18em] text-primary sm:text-xs">Technical GTM for AI startups</p>
+              <h2 className="mx-auto mt-6 max-w-3xl text-3xl leading-[0.98] sm:text-4xl sm:leading-[0.95] md:text-5xl lg:text-6xl xl:text-7xl">
+                <WordsPullUpMultiStyle
+                  segments={[
+                    { text: 'I build the GTM engine' },
+                    { text: 'around technical products.', className: 'font-serif italic' },
+                  ]}
+                />
+              </h2>
+              <ScrollRevealText text={aboutText} />
+              <div className="mx-auto mt-8 grid w-full max-w-2xl grid-cols-3 gap-2 text-left">
+                {proofStats.map(([value, label]) => (
+                  <div className="rounded-[8px] bg-black/45 p-3 sm:p-4" key={label}>
+                    <p className="text-xl leading-none text-primary sm:text-3xl">{value}</p>
+                    <p className="mt-2 text-[10px] text-gray-500 sm:text-[11px]">{label}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mx-auto mt-7 flex flex-wrap justify-center gap-2">
+                {proofLinks.map((source) => (
+                  <ProofPreview key={source.href} source={source} />
+                ))}
+              </div>
             </div>
-            <div className="mx-auto mt-6 flex max-w-3xl flex-wrap justify-center gap-2">
-              {[
-                'OpenDeploy Co-Founder',
-                'Hackathon',
-                'Honour Specialization In CS',
-                'Psychology',
-                'Visual & Design',
-              ].map((tag) => (
-                <span className="rounded-full border border-primary/15 px-3 py-2 text-[11px] text-primary/70" key={tag}>
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <div className="mx-auto mt-7 flex flex-wrap justify-center gap-2">
-              {proofLinks.map((link) => (
-                <LinkPill link={link} key={link.href} />
+            <div className="grid grid-cols-2 content-start gap-4">
+              {aboutGalleryItems.map((item) => (
+                <figure
+                  className={`group relative overflow-hidden rounded-[8px] bg-[#101010] ${item.className}`}
+                  key={item.label}
+                >
+                  <img
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                    src={item.image}
+                    alt={`${item.label} project visual`}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent" />
+                  <figcaption className="absolute bottom-0 left-0 right-0 p-4 text-[10px] uppercase tracking-[0.18em] text-primary/75">
+                    {item.label}
+                  </figcaption>
+                </figure>
               ))}
             </div>
           </div>
+          <div className="mt-4 grid gap-4 md:grid-cols-3">
+            {capabilities.map((capability, index) => (
+              <motion.article
+                className="rounded-[8px] bg-[#101010] p-6"
+                initial={{ opacity: 0, y: 18 }}
+                key={capability.title}
+                transition={{ duration: 0.6, delay: index * 0.08 }}
+                viewport={{ once: true, margin: '-80px' }}
+                whileInView={{ opacity: 1, y: 0 }}
+              >
+                <p className="text-[9px] uppercase tracking-[0.18em] text-primary/40">0{index + 1}</p>
+                <h3 className="mt-4 text-2xl text-primary">{capability.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-gray-400">{capability.description}</p>
+                <ul className="mt-6 space-y-3 border-t border-primary/10 pt-5">
+                  {capability.bullets.map((bullet) => (
+                    <li className="flex gap-3 text-xs text-primary/65" key={bullet}>
+                      <Check className="h-3.5 w-3.5 flex-none" />
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-2 content-start gap-4">
-            {aboutGalleryItems.map((item) => (
-              <figure className={`group relative overflow-hidden rounded-[8px] bg-[#101010] ${item.className}`} key={item.label}>
-                <img
-                  className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                  src={item.image}
-                  alt={`${item.label} project visual`}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent" />
-                <figcaption className="absolute bottom-0 left-0 right-0 p-4 text-[10px] uppercase tracking-[0.18em] text-primary/75">
-                  {item.label}
-                </figcaption>
-              </figure>
+      <section className="relative overflow-hidden bg-black px-4 py-16 sm:px-6 md:py-24" id="engine">
+        <div className="bg-noise pointer-events-none absolute inset-0 opacity-[0.12]" />
+        <div className="relative mx-auto max-w-7xl rounded-[8px] bg-[#101010] p-6 sm:p-10">
+          <div className="mx-auto max-w-4xl text-center">
+            <p className="text-[10px] uppercase tracking-[0.18em] text-primary/60">Community-led growth engine</p>
+            <h2 className="mt-6 text-3xl leading-none sm:text-4xl md:text-5xl">
+              One system from <span className="font-serif italic text-primary/70">product truth</span> to early believers.
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-gray-400">
+              Workshops, content, partnerships, and experiments become more useful when every step feeds the next one.
+            </p>
+          </div>
+          <div className="mt-10 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+            {growthStages.map(([number, title, description], index) => (
+              <motion.article
+                className="rounded-[8px] border border-primary/10 bg-black/35 p-5"
+                initial={{ opacity: 0, y: 16 }}
+                key={title}
+                transition={{ duration: 0.55, delay: index * 0.06 }}
+                viewport={{ once: true, margin: '-60px' }}
+                whileInView={{ opacity: 1, y: 0 }}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[9px] tracking-[0.18em] text-primary/35">{number}</span>
+                  {index < growthStages.length - 1 ? <ArrowRight className="h-3.5 w-3.5 text-primary/30" /> : null}
+                </div>
+                <h3 className="mt-6 text-lg text-primary">{title}</h3>
+                <p className="mt-3 text-xs leading-relaxed text-gray-500">{description}</p>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-black px-4 py-16 sm:px-6 md:py-24" id="gtm-stories">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-10 text-center">
+            <p className="text-[10px] uppercase tracking-[0.18em] text-primary/60">How I work</p>
+            <h2 className="mx-auto mt-5 max-w-4xl text-3xl leading-tight sm:text-4xl md:text-5xl">
+              Three ways I turn technical depth into real-world pull.
+            </h2>
+          </div>
+          <div className="space-y-5">
+            {gtmStories.map((story, index) => (
+              <GtmStoryCard index={index} key={story.title} story={story} />
             ))}
           </div>
         </div>
@@ -573,8 +730,8 @@ function App() {
             <h2 className="mx-auto max-w-4xl text-xl font-normal leading-tight sm:text-2xl md:text-3xl lg:text-4xl">
               <WordsPullUpMultiStyle
                 segments={[
-                  { text: 'Technical systems with real-world pull.' },
-                  { text: 'Built fast. Shown publicly. Improved by feedback.', className: 'text-gray-500' },
+                  { text: 'Technical work that keeps the GTM story' },
+                  { text: 'close to the product truth.', className: 'text-gray-500' },
                 ]}
               />
             </h2>
@@ -586,6 +743,42 @@ function App() {
           </div>
         </div>
       </section>
+
+      <section className="bg-black px-4 pb-6 pt-16 sm:px-6 md:pt-24" id="contact">
+        <div className="mx-auto max-w-7xl rounded-[8px] bg-[#101010] p-6 sm:p-10">
+          <div className="grid gap-4 md:grid-cols-3">
+            {collaborationPaths.map((path, index) => (
+              <article className="rounded-[8px] bg-black/40 p-5" key={path.title}>
+                <p className="text-[9px] uppercase tracking-[0.18em] text-primary/35">0{index + 1}</p>
+                <h3 className="mt-4 text-xl text-primary">{path.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-gray-500">{path.description}</p>
+              </article>
+            ))}
+          </div>
+          <div className="mt-12 border-t border-primary/10 pt-10 text-center">
+            <p className="text-[10px] uppercase tracking-[0.18em] text-primary/55">Start a collaboration conversation</p>
+            <h2 className="mx-auto mt-5 max-w-4xl text-4xl leading-[0.95] sm:text-5xl md:text-6xl">
+              Building an AI product that needs its <span className="font-serif italic text-primary/70">first believers?</span>
+            </h2>
+            <a
+              className="group mt-8 inline-flex items-center gap-2 rounded-full bg-primary py-2 pl-5 pr-2 text-sm font-medium text-black transition hover:gap-3 sm:text-base"
+              href={linkedinUrl}
+              rel="noreferrer"
+              target="_blank"
+            >
+              Start a conversation
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-black transition group-hover:scale-110 sm:h-10 sm:w-10">
+                <ArrowRight className="h-4 w-4 text-primary" />
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <footer className="px-6 py-8 text-center text-[9px] uppercase tracking-[0.18em] text-primary/30">
+        Anne Liu · Technical GTM for AI startups
+      </footer>
+
       <AnimatePresence>
         {selectedProject ? <ProjectModal item={selectedProject} onClose={() => setSelectedProject(null)} /> : null}
       </AnimatePresence>
